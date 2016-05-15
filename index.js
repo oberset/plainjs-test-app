@@ -1,4 +1,5 @@
 import { PlainComponent as Pjs } from 'plainjs';
+import { Checkbox, CheckboxTemplate } from './components/checkbox/checkbox';
 
 console.time('render');
 Pjs.render(
@@ -6,5 +7,9 @@ Pjs.render(
     { hello: 'Hello World!!!' },
     document.querySelector('.hello')
 );
+console.timeEnd('render');
+
+console.time('render');
+Pjs.render(CheckboxTemplate, Checkbox, document.querySelector('.container-checkbox'));
 console.timeEnd('render');
 

@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/oberset/plainjs-test-app#readme",
   "dependencies": {
-    "plainjs": "^0.0.2"
+    "plainjs": "^0.0.3"
   },
   "devDependencies": {
     "babel-core": "^6.5.2",

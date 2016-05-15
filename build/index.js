@@ -48,8 +48,14 @@
 
 	var _plainjs = __webpack_require__(1);
 
+	var _checkbox = __webpack_require__(8);
+
 	console.time('render');
 	_plainjs.PlainComponent.render('<h1 content="hello"></h1>', { hello: 'Hello World!!!' }, document.querySelector('.hello'));
+	console.timeEnd('render');
+
+	console.time('render');
+	_plainjs.PlainComponent.render(_checkbox.CheckboxTemplate, _checkbox.Checkbox, document.querySelector('.container-checkbox'));
 	console.timeEnd('render');
 
 /***/ },
@@ -1027,7 +1033,7 @@
 	                    var attributeValue = attribute.value;
 
 	                    if (attributeValue.indexOf(':') === 0) {
-	                        attributesData[attributeName] = attributeValue;
+	                        attributesData[attributeName] = attributeValue.substring(1);
 	                        !hasAttributesData && (hasAttributesData = true);
 	                    } else if (PlainRenderer.options[attributeName]) {
 	                        options[attributeName] = attributeValue;
@@ -1176,8 +1182,8 @@
 	                return fragment.node = null;
 	            }
 
-	            this.setAttributesData(fragment, data);
-	            _PlainDom2.default.setAttributes(node, fragment.attributes);
+	            var updatedAttributes = this.getUpdatedAttributesData(fragment, data, previousData);
+	            updatedAttributes && _PlainDom2.default.setAttributes(node, updatedAttributes);
 
 	            options.content && this.updateContent(node, fragment, data[options.content]);
 	            options.component && this.updateComponent(node, fragment, data[options.component]);
@@ -1378,7 +1384,7 @@
 	                        var key = _step3.value;
 
 	                        var value = fragment.attributesData[key];
-	                        fragment.attributes[key] = data[value.substring(1)];
+	                        fragment.attributes[key] = data[value];
 	                    }
 	                } catch (err) {
 	                    _didIteratorError3 = true;
@@ -1395,6 +1401,50 @@
 	                    }
 	                }
 	            }
+	        }
+	    }, {
+	        key: 'getUpdatedAttributesData',
+	        value: function getUpdatedAttributesData(fragment, data, previousData) {
+	            var updated = null;
+
+	            if (fragment.hasAttributesData) {
+	                var attributes = Object.keys(fragment.attributesData);
+	                if (attributes.length) {
+	                    updated = {};
+
+	                    var _iteratorNormalCompletion4 = true;
+	                    var _didIteratorError4 = false;
+	                    var _iteratorError4 = undefined;
+
+	                    try {
+	                        for (var _iterator4 = attributes[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+	                            var key = _step4.value;
+
+	                            var value = fragment.attributesData[key];
+	                            if (data[value] !== previousData[value]) {
+	                                updated[key] = data[value];
+	                            }
+	                        }
+	                    } catch (err) {
+	                        _didIteratorError4 = true;
+	                        _iteratorError4 = err;
+	                    } finally {
+	                        try {
+	                            if (!_iteratorNormalCompletion4 && _iterator4.return) {
+	                                _iterator4.return();
+	                            }
+	                        } finally {
+	                            if (_didIteratorError4) {
+	                                throw _iteratorError4;
+	                            }
+	                        }
+	                    }
+
+	                    Object.assign(fragment.attributes, updated);
+	                }
+	            }
+
+	            return updated;
 	        }
 	    }, {
 	        key: 'addChildren',
@@ -1414,13 +1464,13 @@
 	            var updatedNodes = [];
 	            var updated = false;
 
-	            var _iteratorNormalCompletion4 = true;
-	            var _didIteratorError4 = false;
-	            var _iteratorError4 = undefined;
+	            var _iteratorNormalCompletion5 = true;
+	            var _didIteratorError5 = false;
+	            var _iteratorError5 = undefined;
 
 	            try {
-	                for (var _iterator4 = list[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-	                    var child = _step4.value;
+	                for (var _iterator5 = list[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+	                    var child = _step5.value;
 
 	                    if (child.type !== 'element') {
 	                        continue;
@@ -1435,16 +1485,16 @@
 	                    }
 	                }
 	            } catch (err) {
-	                _didIteratorError4 = true;
-	                _iteratorError4 = err;
+	                _didIteratorError5 = true;
+	                _iteratorError5 = err;
 	            } finally {
 	                try {
-	                    if (!_iteratorNormalCompletion4 && _iterator4.return) {
-	                        _iterator4.return();
+	                    if (!_iteratorNormalCompletion5 && _iterator5.return) {
+	                        _iterator5.return();
 	                    }
 	                } finally {
-	                    if (_didIteratorError4) {
-	                        throw _iteratorError4;
+	                    if (_didIteratorError5) {
+	                        throw _iteratorError5;
 	                    }
 	                }
 	            }
@@ -1457,27 +1507,27 @@
 	    }, {
 	        key: 'deleteChildren',
 	        value: function deleteChildren(node, list) {
-	            var _iteratorNormalCompletion5 = true;
-	            var _didIteratorError5 = false;
-	            var _iteratorError5 = undefined;
+	            var _iteratorNormalCompletion6 = true;
+	            var _didIteratorError6 = false;
+	            var _iteratorError6 = undefined;
 
 	            try {
-	                for (var _iterator5 = list[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-	                    var child = _step5.value;
+	                for (var _iterator6 = list[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+	                    var child = _step6.value;
 
 	                    this.deleteFragmentNode(node, child);
 	                }
 	            } catch (err) {
-	                _didIteratorError5 = true;
-	                _iteratorError5 = err;
+	                _didIteratorError6 = true;
+	                _iteratorError6 = err;
 	            } finally {
 	                try {
-	                    if (!_iteratorNormalCompletion5 && _iterator5.return) {
-	                        _iterator5.return();
+	                    if (!_iteratorNormalCompletion6 && _iterator6.return) {
+	                        _iterator6.return();
 	                    }
 	                } finally {
-	                    if (_didIteratorError5) {
-	                        throw _iteratorError5;
+	                    if (_didIteratorError6) {
+	                        throw _iteratorError6;
 	                    }
 	                }
 	            }
@@ -1551,6 +1601,169 @@
 	    expression: true
 	};
 	exports.default = PlainRenderer;
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.CheckboxTemplate = exports.Checkbox = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _plainjs = __webpack_require__(1);
+
+	var _ui = __webpack_require__(9);
+
+	var _ui2 = _interopRequireDefault(_ui);
+
+	var _checkbox = __webpack_require__(11);
+
+	var _checkbox2 = _interopRequireDefault(_checkbox);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Checkbox = function (_Plain) {
+	    _inherits(Checkbox, _Plain);
+
+	    function Checkbox() {
+	        _classCallCheck(this, Checkbox);
+
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Checkbox).call(this));
+
+	        _this.setData({
+	            className: 'checkbox',
+	            label: 'set checked',
+	            checked: null
+	        });
+	        return _this;
+	    }
+
+	    _createClass(Checkbox, [{
+	        key: 'onMount',
+	        value: function onMount(node) {
+	            var _this2 = this;
+
+	            this.ui = (0, _ui2.default)(node, {
+	                button: 'button'
+	            });
+
+	            this.checked = this.getData().checked;
+
+	            this.ui.button[0].addEventListener('click', function () {
+	                _this2.checked = !_this2.checked;
+
+	                _this2.setData({
+	                    checked: _this2.checked,
+	                    label: _this2.checked ? 'set unchecked' : 'set checked'
+	                });
+	            });
+	        }
+	    }, {
+	        key: 'onUnmount',
+	        value: function onUnmount() {
+	            this.ui = null;
+	        }
+	    }]);
+
+	    return Checkbox;
+	}(_plainjs.Plain);
+
+	exports.Checkbox = Checkbox;
+	exports.CheckboxTemplate = _checkbox2.default;
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _ui = __webpack_require__(10);
+
+	var _ui2 = _interopRequireDefault(_ui);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _ui2.default;
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = ui;
+
+	var _utils = __webpack_require__(4);
+
+	var _PlainDom = __webpack_require__(6);
+
+	var _PlainDom2 = _interopRequireDefault(_PlainDom);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function ui(node, uiMap) {
+	    if (!_PlainDom2.default.isDomNode(node)) {
+	        throw new Error('Param "node" must be a Node object');
+	    }
+
+	    if (!(0, _utils.isObject)(uiMap)) {
+	        throw new Error('Param "uiMap" must be a plain object');
+	    }
+
+	    var ui = {};
+	    var keys = Object.keys(uiMap);
+
+	    var _iteratorNormalCompletion = true;
+	    var _didIteratorError = false;
+	    var _iteratorError = undefined;
+
+	    try {
+	        for (var _iterator = keys[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	            var key = _step.value;
+
+	            ui[key] = document.querySelectorAll(uiMap[key]);
+	        }
+	    } catch (err) {
+	        _didIteratorError = true;
+	        _iteratorError = err;
+	    } finally {
+	        try {
+	            if (!_iteratorNormalCompletion && _iterator.return) {
+	                _iterator.return();
+	            }
+	        } finally {
+	            if (_didIteratorError) {
+	                throw _iteratorError;
+	            }
+	        }
+	    }
+
+	    return ui;
+	}
+
+/***/ },
+/* 11 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\":className\">\n    <input type=\"checkbox\" checked=\":checked\" />\n    <button type=\"button\" content=\"label\"></button>\n</div>";
 
 /***/ }
 /******/ ]);
