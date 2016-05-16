@@ -1,11 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
     <title>Test Plainjs application</title>
+    <style>
+        .test {
+            margin: 20px;
+        }
+        .test__name {
+            color: #666666;
+            margin-bottom: 5px;
+        }
+    </style>
 </head>
 <body>
-    <div class="hello"></div>
-    <div class="container-checkbox"></div>
+    <div class="test">
+        <div class="test__name">=== Рендеринг "Hello world" в браузере ===</div>
+        <div class="hello"></div>
+    </div>
+
+    <div class="test">
+        <div class="test__name">=== Установка checked/unchecked при клике на кнопку ===</div>
+        <div class="container-checkbox"></div>
+    </div>
+
+    <div class="test">
+        <div class="test__name">=== При вводе значения в поле ID блокировать остальные поля ===</div>
+        <div class="container-input"></div>
+    </div>
+
     <script src="build/index.js"></script>
 </body>
 </html>

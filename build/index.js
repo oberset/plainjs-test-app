@@ -50,12 +50,18 @@
 
 	var _checkbox = __webpack_require__(8);
 
+	var _input = __webpack_require__(12);
+
 	console.time('render');
 	_plainjs.PlainComponent.render('<h1 content="hello"></h1>', { hello: 'Hello World!!!' }, document.querySelector('.hello'));
 	console.timeEnd('render');
 
 	console.time('render');
 	_plainjs.PlainComponent.render(_checkbox.CheckboxTemplate, _checkbox.Checkbox, document.querySelector('.container-checkbox'));
+	console.timeEnd('render');
+
+	console.time('render');
+	_plainjs.PlainComponent.render(_input.InputTemplate, _input.Input, document.querySelector('.container-input'));
 	console.timeEnd('render');
 
 /***/ },
@@ -1660,7 +1666,7 @@
 
 	            this.checked = this.getData().checked;
 
-	            this.ui.button[0].addEventListener('click', function () {
+	            this.ui.button[0].addEventListener('click', function (e) {
 	                _this2.checked = !_this2.checked;
 
 	                _this2.setData({
@@ -1764,6 +1770,121 @@
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\":className\">\n    <input type=\"checkbox\" checked=\":checked\" />\n    <button type=\"button\" content=\"label\"></button>\n</div>";
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.InputTemplate = exports.Input = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _plainjs = __webpack_require__(1);
+
+	var _ui = __webpack_require__(9);
+
+	var _ui2 = _interopRequireDefault(_ui);
+
+	var _input = __webpack_require__(13);
+
+	var _input2 = _interopRequireDefault(_input);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Input = function (_Plain) {
+	    _inherits(Input, _Plain);
+
+	    function Input() {
+	        _classCallCheck(this, Input);
+
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Input).call(this));
+
+	        _this.setData({
+	            className: 'input',
+	            id: {
+	                label: 'ID',
+	                placeholder: 'input id',
+	                disabled: null
+	            },
+	            'first-name': {
+	                label: 'First name',
+	                placeholder: 'input first name',
+	                disabled: null
+	            },
+	            'last-name': {
+	                label: 'Last name',
+	                placeholder: 'input last name',
+	                disabled: null
+	            }
+	        });
+
+	        _this.disabledFields = ['first-name', 'last-name'];
+	        _this.valueId = null;
+	        return _this;
+	    }
+
+	    _createClass(Input, [{
+	        key: 'setDisabled',
+	        value: function setDisabled(flag) {
+	            var changes = {};
+
+	            this.disabledFields.map(function (field) {
+	                changes[field] = { disabled: flag };
+	            });
+
+	            this.setData(changes);
+	        }
+	    }, {
+	        key: 'onMount',
+	        value: function onMount(node) {
+	            var _this2 = this;
+
+	            this.ui = (0, _ui2.default)(node, {
+	                inputId: '#id'
+	            });
+
+	            this.ui.inputId[0].addEventListener('focus', function () {
+	                _this2.setDisabled(true);
+	            });
+
+	            this.ui.inputId[0].addEventListener('blur', function () {
+	                !_this2.valueId && _this2.setDisabled(false);
+	            });
+
+	            this.ui.inputId[0].addEventListener('input', function (e) {
+	                _this2.valueId = e.currentTarget.value;
+	            });
+	        }
+	    }, {
+	        key: 'onUnmount',
+	        value: function onUnmount() {
+	            this.ui = null;
+	            this.valueId = null;
+	        }
+	    }]);
+
+	    return Input;
+	}(_plainjs.Plain);
+
+	exports.Input = Input;
+	exports.InputTemplate = _input2.default;
+
+/***/ },
+/* 13 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\":className\">\n    <div from=\"id\">\n        <label for=\"id\" content=\"label\">: </label>\n        <input id=\"id\" name=\"id\" type=\"text\" size=\"20\" placeholder=\":placeholder\" />\n    </div>\n    <div from=\"first-name\">\n        <label for=\"first-name\" content=\"label\">: </label>\n        <input id=\"first-name\" name=\"first-name\" type=\"text\" disabled=\":disabled\" size=\"20\" placeholder=\":placeholder\" />\n    </div>\n    <div from=\"last-name\">\n        <label for=\"last-name\" content=\"label\">: </label>\n        <input id=\"last-name\" name=\"last-name\" type=\"text\" disabled=\":disabled\" size=\"20\" placeholder=\":placeholder\" />\n    </div>\n</div>";
 
 /***/ }
 /******/ ]);

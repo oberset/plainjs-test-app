@@ -1,6 +1,6 @@
 import { Plain } from 'plainjs';
 import UI from 'plainjs/ui';
-import CheckboxTemplate from './checkbox.html';
+import template from './checkbox.html';
 
 class Checkbox extends Plain {
 
@@ -21,7 +21,7 @@ class Checkbox extends Plain {
 
         this.checked = this.getData().checked;
 
-        this.ui.button[0].addEventListener('click', () => {
+        this.ui.button[0].addEventListener('click', (e) => {
             this.checked = !this.checked;
 
             this.setData({
@@ -37,4 +37,4 @@ class Checkbox extends Plain {
 
 }
 
-export { Checkbox, CheckboxTemplate };
+export { Checkbox, template as CheckboxTemplate };
