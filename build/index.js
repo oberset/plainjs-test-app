@@ -52,6 +52,8 @@
 
 	var _input = __webpack_require__(12);
 
+	var _loader = __webpack_require__(14);
+
 	console.time('render');
 	_plainjs.PlainComponent.render('<h1 content="hello"></h1>', { hello: 'Hello World!!!' }, document.querySelector('.hello'));
 	console.timeEnd('render');
@@ -62,6 +64,10 @@
 
 	console.time('render');
 	_plainjs.PlainComponent.render(_input.InputTemplate, _input.Input, document.querySelector('.container-input'));
+	console.timeEnd('render');
+
+	console.time('render');
+	_plainjs.PlainComponent.render(_loader.LoaderTemplate, _loader.Loader, document.querySelector('.container-loader'));
 	console.timeEnd('render');
 
 /***/ },
@@ -1885,6 +1891,76 @@
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\":className\">\n    <div from=\"id\">\n        <label for=\"id\" content=\"label\">: </label>\n        <input id=\"id\" name=\"id\" type=\"text\" size=\"20\" placeholder=\":placeholder\" />\n    </div>\n    <div from=\"first-name\">\n        <label for=\"first-name\" content=\"label\">: </label>\n        <input id=\"first-name\" name=\"first-name\" type=\"text\" disabled=\":disabled\" size=\"20\" placeholder=\":placeholder\" />\n    </div>\n    <div from=\"last-name\">\n        <label for=\"last-name\" content=\"label\">: </label>\n        <input id=\"last-name\" name=\"last-name\" type=\"text\" disabled=\":disabled\" size=\"20\" placeholder=\":placeholder\" />\n    </div>\n</div>";
+
+/***/ },
+/* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.LoaderTemplate = exports.Loader = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _plainjs = __webpack_require__(1);
+
+	var _ui = __webpack_require__(9);
+
+	var _ui2 = _interopRequireDefault(_ui);
+
+	var _loader = __webpack_require__(15);
+
+	var _loader2 = _interopRequireDefault(_loader);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Loader = function (_Plain) {
+	    _inherits(Loader, _Plain);
+
+	    function Loader() {
+	        _classCallCheck(this, Loader);
+
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Loader).call(this));
+
+	        _this.setData({
+	            loaded: false
+	        });
+	        return _this;
+	    }
+
+	    _createClass(Loader, [{
+	        key: 'onMount',
+	        value: function onMount(node) {
+	            var _this2 = this;
+
+	            setTimeout(function () {
+	                _this2.setData({
+	                    loaded: true
+	                });
+	            }, 5000);
+	        }
+	    }]);
+
+	    return Loader;
+	}(_plainjs.Plain);
+
+	exports.Loader = Loader;
+	exports.LoaderTemplate = _loader2.default;
+
+/***/ },
+/* 15 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"loader\">\n    <div match=\"loaded\" eq=\"false\">Идет загрузка...</div>\n    <div match=\"loaded\" eq=\"true\">Загрузка завершена!!!</div>\n</div>";
 
 /***/ }
 /******/ ]);

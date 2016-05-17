@@ -1,6 +1,7 @@
 import { PlainComponent as Pjs } from 'plainjs';
 import { Checkbox, CheckboxTemplate } from './components/checkbox/checkbox';
 import { Input, InputTemplate } from './components/input/input';
+import { Loader, LoaderTemplate } from './components/loader/loader';
 
 console.time('render');
 Pjs.render(
@@ -16,4 +17,8 @@ console.timeEnd('render');
 
 console.time('render');
 Pjs.render(InputTemplate, Input, document.querySelector('.container-input'));
+console.timeEnd('render');
+
+console.time('render');
+Pjs.render(LoaderTemplate, Loader, document.querySelector('.container-loader'));
 console.timeEnd('render');

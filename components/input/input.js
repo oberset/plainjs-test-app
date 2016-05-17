@@ -50,7 +50,7 @@ class Input extends Plain {
 
             if (val && !this.disabled) {
                 this.updateFields(this.disabled = true);
-                
+
             } else if (!val && this.disabled) {
                 this.updateFields(this.disabled = false);
             }
