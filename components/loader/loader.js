@@ -7,16 +7,28 @@ class Loader extends Plain {
         super();
 
         this.setData({
-           loaded: false
+            status: 0
         });
     }
 
     onMount(node) {
-        setTimeout(() => {
-            this.setData({
-                loaded: true
-            })
-        }, 5000);
+        this.ui = UI(node, {
+           button: 'button'
+        });
+
+        this.ui.button[0].addEventListener('click', (e) => {
+            if (this.getData().status < 1) {
+                this.setData({ status: 1 });
+
+                setTimeout(() => {
+                    this.setData({ status: 2 });
+                }, 2500);
+            }
+        });
+    }
+
+    onUnmount() {
+        this.ui = null;
     }
 }
 

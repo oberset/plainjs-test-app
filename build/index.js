@@ -1751,7 +1751,7 @@
 	        for (var _iterator = keys[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 	            var key = _step.value;
 
-	            ui[key] = document.querySelectorAll(uiMap[key]);
+	            ui[key] = node.querySelectorAll(uiMap[key]);
 	        }
 	    } catch (err) {
 	        _didIteratorError = true;
@@ -1932,7 +1932,7 @@
 	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Loader).call(this));
 
 	        _this.setData({
-	            loaded: false
+	            status: 0
 	        });
 	        return _this;
 	    }
@@ -1942,11 +1942,24 @@
 	        value: function onMount(node) {
 	            var _this2 = this;
 
-	            setTimeout(function () {
-	                _this2.setData({
-	                    loaded: true
-	                });
-	            }, 5000);
+	            this.ui = (0, _ui2.default)(node, {
+	                button: 'button'
+	            });
+
+	            this.ui.button[0].addEventListener('click', function (e) {
+	                if (_this2.getData().status < 1) {
+	                    _this2.setData({ status: 1 });
+
+	                    setTimeout(function () {
+	                        _this2.setData({ status: 2 });
+	                    }, 2500);
+	                }
+	            });
+	        }
+	    }, {
+	        key: 'onUnmount',
+	        value: function onUnmount() {
+	            this.ui = null;
 	        }
 	    }]);
 
@@ -1960,7 +1973,7 @@
 /* 15 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"loader\">\n    <div match=\"loaded\" eq=\"false\">Идет загрузка...</div>\n    <div match=\"loaded\" eq=\"true\">Загрузка завершена!!!</div>\n</div>";
+	module.exports = "<div class=\"loader\">\n    <div class=\"content\">\n        <div match=\"status\" eq=\"0\">Кликните для начала загрузки.</div>\n        <div match=\"status\" eq=\"1\">Идет загрузка...</div>\n        <div match=\"status\" eq=\"2\">Загрузка завершена!!!</div>\n    </div>\n    <button>Click</button>\n</div>";
 
 /***/ }
 /******/ ]);
