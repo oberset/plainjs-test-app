@@ -27,14 +27,14 @@ class Input extends Plain {
         });
 
         this.disabledFields = ['first-name', 'last-name'];
-        this.valueId = null;
+        this.disabled = false;
     }
 
-    setDisabled(flag) {
+    updateFields() {
         let changes = {};
 
         this.disabledFields.map(field => {
-            changes[field] = { disabled: flag };
+            changes[field] = { disabled: this.disabled };
         });
 
         this.setData(changes);
@@ -45,22 +45,21 @@ class Input extends Plain {
             inputId: '#id'
         });
 
-        this.ui.inputId[0].addEventListener('focus', () => {
-            this.setDisabled(true);
-        });
-
-        this.ui.inputId[0].addEventListener('blur', () => {
-            !this.valueId && this.setDisabled(false);
-        });
-
         this.ui.inputId[0].addEventListener('input', (e) => {
-            this.valueId = e.currentTarget.value;
+            let val = e.currentTarget.value;
+
+            if (val && !this.disabled) {
+                this.updateFields(this.disabled = true);
+                
+            } else if (!val && this.disabled) {
+                this.updateFields(this.disabled = false);
+            }
         });
     }
 
     onUnmount() {
         this.ui = null;
-        this.valueId = null;
+        this.disabled = false;
     }
 }
 

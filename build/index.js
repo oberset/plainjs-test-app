@@ -1830,17 +1830,19 @@
 	        });
 
 	        _this.disabledFields = ['first-name', 'last-name'];
-	        _this.valueId = null;
+	        _this.disabled = false;
 	        return _this;
 	    }
 
 	    _createClass(Input, [{
-	        key: 'setDisabled',
-	        value: function setDisabled(flag) {
+	        key: 'updateFields',
+	        value: function updateFields() {
+	            var _this2 = this;
+
 	            var changes = {};
 
 	            this.disabledFields.map(function (field) {
-	                changes[field] = { disabled: flag };
+	                changes[field] = { disabled: _this2.disabled };
 	            });
 
 	            this.setData(changes);
@@ -1848,29 +1850,27 @@
 	    }, {
 	        key: 'onMount',
 	        value: function onMount(node) {
-	            var _this2 = this;
+	            var _this3 = this;
 
 	            this.ui = (0, _ui2.default)(node, {
 	                inputId: '#id'
 	            });
 
-	            this.ui.inputId[0].addEventListener('focus', function () {
-	                _this2.setDisabled(true);
-	            });
-
-	            this.ui.inputId[0].addEventListener('blur', function () {
-	                !_this2.valueId && _this2.setDisabled(false);
-	            });
-
 	            this.ui.inputId[0].addEventListener('input', function (e) {
-	                _this2.valueId = e.currentTarget.value;
+	                var val = e.currentTarget.value;
+
+	                if (val && !_this3.disabled) {
+	                    _this3.updateFields(_this3.disabled = true);
+	                } else if (!val && _this3.disabled) {
+	                    _this3.updateFields(_this3.disabled = false);
+	                }
 	            });
 	        }
 	    }, {
 	        key: 'onUnmount',
 	        value: function onUnmount() {
 	            this.ui = null;
-	            this.valueId = null;
+	            this.disabled = false;
 	        }
 	    }]);
 
