@@ -2,6 +2,7 @@ import { PlainComponent as Pjs } from 'plainjs';
 import { Checkbox, CheckboxTemplate } from './components/checkbox/checkbox';
 import { Input, InputTemplate } from './components/input/input';
 import { Loader, LoaderTemplate } from './components/loader/loader';
+import { Select, SelectTemplate } from './components/select/select';
 
 console.time('render');
 Pjs.render(
@@ -21,4 +22,8 @@ console.timeEnd('render');
 
 console.time('render');
 Pjs.render(LoaderTemplate, Loader, document.querySelector('.container-loader'));
+console.timeEnd('render');
+
+console.time('render');
+Pjs.render(SelectTemplate, Select, document.querySelector('.container-select'));
 console.timeEnd('render');

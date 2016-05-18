@@ -54,6 +54,8 @@
 
 	var _loader = __webpack_require__(14);
 
+	var _select = __webpack_require__(16);
+
 	console.time('render');
 	_plainjs.PlainComponent.render('<h1 content="hello"></h1>', { hello: 'Hello World!!!' }, document.querySelector('.hello'));
 	console.timeEnd('render');
@@ -68,6 +70,10 @@
 
 	console.time('render');
 	_plainjs.PlainComponent.render(_loader.LoaderTemplate, _loader.Loader, document.querySelector('.container-loader'));
+	console.timeEnd('render');
+
+	console.time('render');
+	_plainjs.PlainComponent.render(_select.SelectTemplate, _select.Select, document.querySelector('.container-select'));
 	console.timeEnd('render');
 
 /***/ },
@@ -1974,6 +1980,86 @@
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"loader\">\n    <div class=\"content\">\n        <div match=\"status\" eq=\"0\">Кликните для начала загрузки.</div>\n        <div match=\"status\" eq=\"1\">Идет загрузка...</div>\n        <div match=\"status\" eq=\"2\">Загрузка завершена!!!</div>\n    </div>\n    <button>Click</button>\n</div>";
+
+/***/ },
+/* 16 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.SelectTemplate = exports.Select = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _plainjs = __webpack_require__(1);
+
+	var _ui = __webpack_require__(9);
+
+	var _ui2 = _interopRequireDefault(_ui);
+
+	var _select = __webpack_require__(17);
+
+	var _select2 = _interopRequireDefault(_select);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Select = function (_Plain) {
+	    _inherits(Select, _Plain);
+
+	    function Select() {
+	        _classCallCheck(this, Select);
+
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Select).call(this));
+
+	        _this.options = [{ value: 1, label: 'One' }, { value: 2, label: 'Two' }, { value: 3, label: 'Three' }, { value: 4, label: 'Four' }, { value: 5, label: 'Five' }];
+
+	        _this.setData({
+	            selected: _this.options[0].label,
+	            options: _this.options
+	        });
+	        return _this;
+	    }
+
+	    _createClass(Select, [{
+	        key: 'onMount',
+	        value: function onMount(node) {
+	            var _this2 = this;
+
+	            this.ui = (0, _ui2.default)(node, { select: 'select' });
+
+	            this.ui.select[0].addEventListener('change', function (e) {
+	                _this2.setData({
+	                    selected: _this2.options[e.currentTarget.selectedIndex].label
+	                });
+	            });
+	        }
+	    }, {
+	        key: 'onUnmount',
+	        value: function onUnmount() {
+	            this.ui = null;
+	        }
+	    }]);
+
+	    return Select;
+	}(_plainjs.Plain);
+
+	exports.Select = Select;
+	exports.SelectTemplate = _select2.default;
+
+/***/ },
+/* 17 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"select\">\n    <h3 content=\"selected\"></h3>\n    <select for-each=\"options\" to=\"option\">\n        <option from=\"option\" value=\":value\" content=\"label\"></option>\n    </select>\n</div>";
 
 /***/ }
 /******/ ]);
