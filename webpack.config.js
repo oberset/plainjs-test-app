@@ -1,3 +1,5 @@
+'use strict';
+
 var path = require('path');
 var webpack = require('webpack');
 
@@ -22,5 +24,10 @@ module.exports = {
                 exclude: /node_modules/
             }
         ]
+    },
+    devtool: 'source-map',
+    watch: true,
+    watchOptions: {
+        aggregateTimeout: 300
     }
 };
